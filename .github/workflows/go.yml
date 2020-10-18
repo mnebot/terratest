@@ -30,17 +30,9 @@ jobs:
             dep ensure
         fi
 
-#    - name: Build
-#      run: go build -v .
-
     - name: Test
-      run: go test ./test/terraform_aws_dynamodb_example_test.go -v --junitfile unit-tests.xml .
+      run: go test ./test/terraform_aws_dynamodb_example_test.go -v .
       env:
         AWS_ACCESS_KEY_ID : AKIAJBQJJIXJJ4IQWXUA
         AWS_SECRET_ACCESS_KEY : ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         
-    - name: Archive test unit file results
-      uses: actions/upload-artifact@v2
-      with:
-        name: unit-tests-junit-results
-        path: unit-tests.xml
