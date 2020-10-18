@@ -35,3 +35,6 @@ jobs:
 
     - name: Test
       run: go test ./test/terraform_aws_s3_example_test.go -v .
+      env:
+        AWS_ACCESS_KEY_ID : AKIAWNSRVM4PWKYGHUVJ
+        AWS_SECRET_ACCESS_KEY : ${{ secrets.AWS_SECRET_ACCESS_KEY }}
