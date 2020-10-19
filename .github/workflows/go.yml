@@ -13,14 +13,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
+    - name: Check out code 
+      uses: actions/checkout@v2
+      
+    - name: Run Checkov action
+      uses: bridgecrewio/checkov-action@master
+      with:
+        directory: examples/terraform-aws-dynamodb-example/
+        quiet: false # optional: display only failed checks
+        framework: terraform 
+    
     - name: Set up Go 1.x
       uses: actions/setup-go@v2
       with:
         go-version: ^1.13
       id: go
-
-    - name: Check out code into the Go module directory
-      uses: actions/checkout@v2
 
     - name: Get dependencies
       run: |
@@ -30,22 +37,9 @@ jobs:
             dep ensure
         fi
         
-    - name: Run Checkov action
-      uses: bridgecrewio/checkov-action@master
-      with:
-        directory: examples/terraform-aws-dynamodb-example/
-        quiet: false # optional: display only failed checks
-        framework: terraform 
-
     - name: Unit Test with Terratest
       run: go test ./test/terraform_aws_dynamodb_example_test.go -v .
       env:
         AWS_ACCESS_KEY_ID : AKIAJBQJJIXJJ4IQWXUA
         AWS_SECRET_ACCESS_KEY : ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-
-    - name: Upload test results
-      uses: actions/upload-artifact@v2
-      with:
-        name: test-results
-        path: results/
