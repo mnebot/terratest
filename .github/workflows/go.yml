@@ -43,3 +43,7 @@ jobs:
         AWS_ACCESS_KEY_ID : AKIAJBQJJIXJJ4IQWXUA
         AWS_SECRET_ACCESS_KEY : ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
+    - name: Bump version and push tag
+      uses: mathieudutour/github-tag-action@v4.5
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
