@@ -1,4 +1,4 @@
-name:  S3 Example workflow for Terratest Go Unit testing fot Terraform AWS projects 
+name:  Terraform AWS DynamoDB Example workflow for Terratest Go Unit testing
 
 on:
   push:
