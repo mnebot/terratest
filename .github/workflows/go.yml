@@ -36,8 +36,9 @@ jobs:
         AWS_ACCESS_KEY_ID : AKIAJBQJJIXJJ4IQWXUA
         AWS_SECRET_ACCESS_KEY : ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-    - name: Golang Test Annotations
-      uses: guyarb/golang-test-annoations@v0.1
+
+    - name: Upload test results
+      uses: actions/upload-artifact@v2
       with:
-        test-results: test.json
-        
+        name: unit-test-results
+        path: test.json
