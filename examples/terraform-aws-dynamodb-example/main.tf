@@ -25,7 +25,7 @@ resource "aws_dynamodb_table" "example" {
   }
 
   point_in_time_recovery {
-    enabled = false
+    enabled = true # set it false to not pass static test
   }
 
   attribute {
