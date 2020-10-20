@@ -64,7 +64,9 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
       
-    - run: cd ./examples/terraform-aws-dynamodb-example/
+    - run: |
+        ls -la
+        cd ./examples/terraform-aws-dynamodb-example/
 
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform
