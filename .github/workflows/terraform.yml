@@ -45,9 +45,7 @@
 name: 'Terraform'
 
 on:
-  push:
-    tags:
-      - '*'
+  create
 
 jobs:
   terraform:
