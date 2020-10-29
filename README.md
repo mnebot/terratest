@@ -7,7 +7,7 @@
 ![go.mod version](https://img.shields.io/github/go-mod/go-version/gruntwork-io/terratest)
 ![Terraform AWS DynamoDB Example workflow for Terratest Go Unit testing](https://github.com/mnebot/terratest/workflows/Terraform%20AWS%20DynamoDB%20Example%20workflow%20for%20Terratest%20Go%20Unit%20testing/badge.svg?branch=master&event=push)
 
-Terratest is a Go library that makes it easier to write automated tests for your infrastructure code. It provides a
+Terratest is  a Go library that makes it easier to write automated tests for your infrastructure code. It provides a
 variety of helper functions and patterns for common infrastructure testing tasks, including:
 
 - Testing Terraform code
