@@ -25,7 +25,15 @@ func TestEC2(t *testing.T) {
 	t.Parallel()
 
 	// execute Terraform
-	instanceID := RunTerraform(t)
+	terraformOptions := &terraform.Options{
+		TerraformDir: "../examples/terraform-aws-example",
+		Vars:         map[string]interface{}{},
+		EnvVars:      map[string]string{"AWS_DEFAULT_REGION": awsRegion},
+	}
+	defer terraform.Destroy(t, terraformOptions)
+	terraform.InitAndApply(t, terraformOptions)
+
+	instanceID := terraform.Output(t, terraformOptions, "instance_id")
 
 	// Create EC2 client
 	sess, err := session.NewSession(&aws.Config{Region: aws.String(awsRegion)})
@@ -91,17 +99,4 @@ func CheckAMI(t *testing.T, ec2svc *ec2.EC2, instanceID string) {
 
 	// Check if the EC2 image name is as expected.
 	assert.Contains(t, imageName, expectedAMIName)
-}
-
-// Execute terraform
-func RunTerraform(t *testing.T) string {
-	terraformOptions := &terraform.Options{
-		TerraformDir: "../examples/terraform-aws-example",
-		Vars:         map[string]interface{}{},
-		EnvVars:      map[string]string{"AWS_DEFAULT_REGION": awsRegion},
-	}
-	defer terraform.Destroy(t, terraformOptions)
-	terraform.InitAndApply(t, terraformOptions)
-
-	return terraform.Output(t, terraformOptions, "instance_id")
 }
