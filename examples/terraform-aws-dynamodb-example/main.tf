@@ -43,7 +43,7 @@ resource "aws_dynamodb_table" "example" {
   }
 
   tags = {
-    Environment = "development" # Terratest expects production
+    Environment = "production" # Terratest expects production
   }
 }
 
