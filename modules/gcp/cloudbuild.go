@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 
-	cloudbuild "cloud.google.com/go/cloudbuild/apiv1/v2"
 	"github.com/gruntwork-io/terratest/modules/testing"
 	"github.com/stretchr/testify/require"
 	"google.golang.org/api/iterator"
