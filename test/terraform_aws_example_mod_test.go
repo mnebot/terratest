@@ -7,6 +7,8 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/ec2"
+	"github.com/aws/aws-sdk-go/service/ssm"
+	"github.com/aws/aws-sdk-go/service/ssm/ssmiface"
 
 	"github.com/gruntwork-io/terratest/modules/logger"
 	"github.com/gruntwork-io/terratest/modules/terraform"
@@ -41,10 +43,12 @@ func TestEC2(t *testing.T) {
 		fmt.Println(err.Error())
 	}
 	ec2svc := ec2.New(sess)
+	ssmsvc := ssm.New(sess)
 
 	// Run Checks
 	CheckTags(t, ec2svc, instanceID)
 	CheckAMI(t, ec2svc, instanceID)
+	CheckSSMParameters(t, ssmsvc, instanceID)
 }
 
 // Check if expected tags exists
@@ -100,3 +104,25 @@ func CheckAMI(t *testing.T, ec2svc *ec2.EC2, instanceID string) {
 	// Check if the EC2 image name is as expected.
 	assert.Contains(t, imageName, expectedAMIName)
 }
+
+// Check if expected SSM parameter exists and have the correct value
+func CheckSSMParameters(t *testing.T, ssmsvc ssmiface.SSMAPI, instanceID string) {
+
+	name := "Test_EC2_instanceID"
+	pname := &name
+
+	results, err := ssmsvc.GetParameter(&ssm.GetParameterInput{
+		Name: pname,
+	})
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+
+	logger.Log(t, "SSM Parameter Test_EC2_instanceID value: "+*results.Parameter.Value)
+
+	// Check if the SSM Parameter with name "Test_EC2_instanceID" has the correct value
+	assert.Equal(t, instanceID, *results.Parameter.Value)
+}
+
+// TODO S3 + KMS + naming (join) + TAGS corporativos

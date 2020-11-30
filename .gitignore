@@ -21,3 +21,8 @@ vendor
 .DS_Store
 # Intermediate file for testing
 kubeconfig
+.project
+go.mod
+go.sum
+modules/validate/name_test.go
+modules/validate/names.go

@@ -53,3 +53,15 @@ data "aws_ami" "ubuntu" {
   }
 }
 
+# ---------------------------------------------------------------------------------------------------------------------
+# CREATE TEST SSM PARAMETER
+# ---------------------------------------------------------------------------------------------------------------------
+resource "aws_ssm_parameter" "instance_id" {
+  name        = "Test_EC2_instanceID"
+  description = "EC2 Instance ID"
+  type        = "String"
+  value       = aws_instance.example.id
+  tags = {
+    environment = "test"
+  }
+}
